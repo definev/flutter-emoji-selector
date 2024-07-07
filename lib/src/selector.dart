@@ -239,43 +239,47 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                 ),
                 child: ListenableBuilder(
                   listenable: _controller,
-                  builder: (context, child) {
-                    return Stack(
-                      fit: StackFit.loose,
-                      children: [
-                        child!,
-                        if (_controller.text.isNotEmpty)
-                          IgnorePointer(
-                            child: StyledText(
-                              'Search emoji',
-                              style: Style(
-                                $text.style.ref(TextStyleVariant.h6),
-                                $text.style.color(
-                                  ColorVariant.onSurface
-                                      .resolve(context)
-                                      .withOpacity(
-                                        OpacityVariant.blend
-                                            .resolve(context)
-                                            .value,
-                                      ),
-                                ),
+                  builder: (context, child) => Stack(
+                    fit: StackFit.loose,
+                    children: [
+                      child!,
+                      if (_controller.text.isEmpty)
+                        IgnorePointer(
+                          child: StyledText(
+                            'Search emoji',
+                            style: Style(
+                              $text.style.ref(TextStyleVariant.h6),
+                              $text.style.color(
+                                ColorVariant.onSurface
+                                    .resolve(context)
+                                    .withOpacity(
+                                      OpacityVariant.blend
+                                          .resolve(context)
+                                          .value,
+                                    ),
                               ),
                             ),
                           ),
-                      ],
-                    );
-                  },
+                        ),
+                    ],
+                  ),
                   child: EditableText(
                     controller: _controller,
                     focusNode: _focusNode,
-                    style: TextStyleVariant.h6.resolve(context),
+                    style: TextStyleVariant.h6.resolve(context).copyWith(
+                        color: ColorVariant.onSurface.resolve(context)),
                     cursorColor: textSelectionData.cursorColor!,
                     backgroundCursorColor: textSelectionData.selectionColor!,
                     onChanged: searchEmoji,
                   ),
                 ),
               ),
-              DSHorizontalDivider(),
+              Divider(
+                height: 1,
+                color: ColorVariant.onSurface.resolve(context).withOpacity(
+                      OpacityVariant.hightlight.resolve(context).value,
+                    ),
+              ),
               if (widget.withTitle)
                 Padding(
                   padding: EdgeInsets.symmetric(
