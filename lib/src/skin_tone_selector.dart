@@ -18,7 +18,7 @@ class SkinToneSelector extends StatefulWidget {
 
 class _SkinToneState extends State<SkinToneSelector> {
   int _skin = 0;
-  late OverlayEntry _overlayEntry;
+  OverlayEntry? _overlayEntry;
   bool _expanded = false;
   FocusNode focusNode = FocusNode();
 
@@ -38,7 +38,7 @@ class _SkinToneState extends State<SkinToneSelector> {
         child: FocusableActionDetector(
           focusNode: focusNode,
           onShowFocusHighlight: (value) =>
-              value ? null : _overlayEntry.remove(),
+              value ? null : _overlayEntry?.remove(),
           child: DSToolbar(
             direction: Axis.horizontal,
             children: [
@@ -49,7 +49,7 @@ class _SkinToneState extends State<SkinToneSelector> {
                     $box.width(size.height),
                   ),
                   onPressed: () {
-                    _overlayEntry.remove();
+                    _overlayEntry?.remove();
                     setState(() {
                       _skin = skin;
                       widget.onSkinChanged(skin);
@@ -68,7 +68,7 @@ class _SkinToneState extends State<SkinToneSelector> {
   @override
   void dispose() {
     super.dispose();
-    if (_overlayEntry.mounted) _overlayEntry.remove();
+    if (_overlayEntry?.mounted == true) _overlayEntry?.remove();
     focusNode.dispose();
   }
 
@@ -78,10 +78,10 @@ class _SkinToneState extends State<SkinToneSelector> {
       skin: _skin,
       onPressed: () {
         if (_expanded) {
-          _overlayEntry.remove();
+          _overlayEntry?.remove();
         } else {
           _overlayEntry = createOverlay(context);
-          Overlay.of(context).insert(_overlayEntry);
+          Overlay.of(context).insert(_overlayEntry!);
         }
         setState(() {
           _expanded = !_expanded;
