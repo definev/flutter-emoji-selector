@@ -5,13 +5,23 @@ description: An Emoji picker component for Flutter with the latest set of emojis
 repository: https://github.com/Alfaizkhan/flutter-emoji_selector
 version: 0.0.6
 
+publish_to: none
+
 environment:
-  sdk: ">=2.17.3 <4.0.0"
-  flutter: ">=1.17.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  
+  design_system:
+    git:
+      url: https://github.com/definev/genit.git
+      path: core/design_system
+      ref: main
+  
+  mix: ^1.2.0
 
 dev_dependencies:
   flutter_test:

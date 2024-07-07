@@ -1,6 +1,8 @@
+import 'package:design_system/design_system.dart';
 import 'package:emoji_selector/src/skin_dot.dart';
 import 'package:emoji_selector/src/skin_tones.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 class SkinToneSelector extends StatefulWidget {
   final Function(int) onSkinChanged;
@@ -18,6 +20,57 @@ class _SkinToneState extends State<SkinToneSelector> {
   int _skin = 0;
   late OverlayEntry _overlayEntry;
   bool _expanded = false;
+  FocusNode focusNode = FocusNode();
+
+  OverlayEntry createOverlay(BuildContext context) {
+    RenderBox renderBox = context.findRenderObject() as RenderBox;
+    var size = renderBox.size;
+    var offset = renderBox.localToGlobal(Offset.zero);
+
+    final width =
+        size.height * SkinTones.tones.length + SkinTones.tones.length + 1;
+    return OverlayEntry(
+      builder: (context) => Positioned(
+        left: offset.dx - width + size.width,
+        top: offset.dy - size.height,
+        height: size.height,
+        width: width,
+        child: FocusableActionDetector(
+          focusNode: focusNode,
+          onShowFocusHighlight: (value) =>
+              value ? null : _overlayEntry.remove(),
+          child: DSToolbar(
+            direction: Axis.horizontal,
+            children: [
+              for (var skin = 0; skin < SkinTones.tones.length; skin++)
+                DSToolbarItem(
+                  style: Style(
+                    $box.height(size.height),
+                    $box.width(size.height),
+                  ),
+                  onPressed: () {
+                    _overlayEntry.remove();
+                    setState(() {
+                      _skin = skin;
+                      widget.onSkinChanged(skin);
+                      _expanded = false;
+                    });
+                  },
+                  child: SkinDot(skin: skin),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_overlayEntry.mounted) _overlayEntry.remove();
+    focusNode.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,44 +89,6 @@ class _SkinToneState extends State<SkinToneSelector> {
       },
     );
   }
-
-  OverlayEntry createOverlay(BuildContext context) {
-    RenderBox renderBox = context.findRenderObject() as RenderBox;
-    var size = renderBox.size;
-    var offset = renderBox.localToGlobal(Offset.zero);
-
-    List<Widget> dots = [];
-    for (var i = 0; i < SkinTones.tones.length; i++) {
-      dots.add(
-        SkinDotButton(
-          skin: i,
-          onPressed: () {
-            _overlayEntry.remove();
-            setState(() {
-              _skin = i;
-              _expanded = false;
-            });
-            widget.onSkinChanged(_skin);
-          },
-        ),
-      );
-    }
-
-    var w = size.width * 6;
-    return OverlayEntry(
-        builder: (context) => Positioned(
-              left: offset.dx - w + size.width,
-              top: offset.dy - size.height,
-              width: w,
-              height: size.height,
-              child: Material(
-                elevation: 4.0,
-                child: Row(
-                  children: dots,
-                ),
-              ),
-            ));
-  }
 }
 
 class SkinDotButton extends StatelessWidget {
@@ -84,19 +99,13 @@ class SkinDotButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 9,
-      height: MediaQuery.of(context).size.width / 9,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.all(0.0),
-        ),
-        autofocus: true,
-        onPressed: onPressed,
-        child: SkinDot(
-          skin: skin,
-        ),
+    return Button(
+      style: Style(
+        $box.height(42),
+        $box.width(42),
       ),
+      onPressed: onPressed,
+      child: SkinDot(skin: skin),
     );
   }
 }

@@ -8,12 +8,14 @@ class SkinDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 14,
       height: 14,
-      decoration: BoxDecoration(
-        color: SkinTones.tones[skin!],
-        shape: BoxShape.circle,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: SkinTones.tones[skin!],
+          shape: BoxShape.circle,
+        ),
       ),
     );
   }
