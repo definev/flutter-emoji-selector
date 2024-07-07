@@ -234,7 +234,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                 padding: EdgeInsets.only(
                   left: SpaceVariant.medium.resolve(context),
                   right: SpaceVariant.medium.resolve(context),
-                  top: SpaceVariant.gap.resolve(context),
+                  top: SpaceVariant.small.resolve(context),
                   bottom: SpaceVariant.gap.resolve(context),
                 ),
                 child: ListenableBuilder(
@@ -273,6 +273,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
               ),
               Divider(
                 height: 1,
+                thickness: 1,
                 color: ColorVariant.onSurface.resolve(context).withOpacity(
                       OpacityVariant.hightlight.resolve(context).value,
                     ),
