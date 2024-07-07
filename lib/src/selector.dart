@@ -36,6 +36,7 @@ class EmojiSelector extends StatefulWidget {
 
 class _EmojiSelectorState extends State<EmojiSelector> {
   TextEditingController _controller = TextEditingController();
+  FocusNode _focusNode = FocusNode();
   Category selectedCategory = Category.smileys;
   List<EmojiInternalData> _emojiSearch = [];
 
@@ -112,6 +113,8 @@ class _EmojiSelectorState extends State<EmojiSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final textSelectionData = Theme.of(context).textSelectionTheme;
+
     if (!_loaded) return Container();
 
     int smileysNum = _groups[Category.smileys]!.pages.length;
@@ -227,14 +230,55 @@ class _EmojiSelectorState extends State<EmojiSelector> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DSTextbox(
-                controller: _controller,
-                onChanged: searchEmoji,
-                hintText: 'Search Emoji',
+              Padding(
+                padding: EdgeInsets.only(
+                  left: SpaceVariant.medium.resolve(context),
+                  right: SpaceVariant.medium.resolve(context),
+                  top: SpaceVariant.gap.resolve(context),
+                  bottom: SpaceVariant.gap.resolve(context),
+                ),
+                child: ListenableBuilder(
+                  listenable: _controller,
+                  builder: (context, child) {
+                    return Stack(
+                      fit: StackFit.loose,
+                      children: [
+                        child!,
+                        if (_controller.text.isNotEmpty)
+                          IgnorePointer(
+                            child: StyledText(
+                              'Search emoji',
+                              style: Style(
+                                $text.style.ref(TextStyleVariant.h6),
+                                $text.style.color(
+                                  ColorVariant.onSurface
+                                      .resolve(context)
+                                      .withOpacity(
+                                        OpacityVariant.blend
+                                            .resolve(context)
+                                            .value,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                  child: EditableText(
+                    controller: _controller,
+                    focusNode: _focusNode,
+                    style: TextStyleVariant.h6.resolve(context),
+                    cursorColor: textSelectionData.cursorColor!,
+                    backgroundCursorColor: textSelectionData.selectionColor!,
+                    onChanged: searchEmoji,
+                  ),
+                ),
               ),
+              DSHorizontalDivider(),
               if (widget.withTitle)
                 Padding(
-                  padding:  EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: SpaceVariant.medium.resolve(context) + 2,
                     vertical: SpaceVariant.small.resolve(context),
                   ),
@@ -327,7 +371,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                 Center(
                   heightFactor: 1.0,
                   child: SizedBox(
-                    height: 35,
+                    height: 32,
                     child: FittedBox(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
