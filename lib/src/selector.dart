@@ -243,24 +243,21 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                     fit: StackFit.loose,
                     children: [
                       child!,
-                      if (_controller.text.isEmpty)
-                        IgnorePointer(
-                          child: StyledText(
-                            'Search emoji',
-                            style: Style(
-                              $text.style.ref(TextStyleVariant.h6),
-                              $text.style.color(
-                                ColorVariant.onSurface
-                                    .resolve(context)
-                                    .withOpacity(
-                                      OpacityVariant.blend
-                                          .resolve(context)
-                                          .value,
-                                    ),
-                              ),
+                      IgnorePointer(
+                        child: StyledText(
+                          _controller.text.isEmpty ? 'Search emoji' : '',
+                          style: Style(
+                            $text.style.ref(TextStyleVariant.h6),
+                            $text.style.color(
+                              ColorVariant.onSurface
+                                  .resolve(context)
+                                  .withOpacity(
+                                    OpacityVariant.blend.resolve(context).value,
+                                  ),
                             ),
                           ),
                         ),
+                      ),
                     ],
                   ),
                   child: EditableText(
