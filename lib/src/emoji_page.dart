@@ -7,15 +7,17 @@ class EmojiPage extends StatelessWidget {
   final int skin;
   final List<EmojiInternalData> emojis;
   final Function(EmojiInternalData) onSelected;
+  final TextStyle emojiTextStyle;
 
-  const EmojiPage(
-      {Key? key,
-      required this.rows,
-      required this.columns,
-      required this.skin,
-      required this.emojis,
-      required this.onSelected})
-      : super(key: key);
+  const EmojiPage({
+    Key? key,
+    required this.rows,
+    required this.columns,
+    required this.skin,
+    required this.emojis,
+    required this.emojiTextStyle,
+    required this.onSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +37,7 @@ class EmojiPage extends StatelessWidget {
                 child: Center(
                   child: Text(
                     emoji.charForSkin(skin),
-                    style: const TextStyle(
-                      fontSize: 24.0,
-                      fontFamily:
-                          'Apple Color Emoji', // Investigate what to use on other platforms
-                    ),
+                    style: emojiTextStyle,
                   ),
                 ),
                 onPressed: () {

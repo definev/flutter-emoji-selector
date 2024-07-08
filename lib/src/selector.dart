@@ -20,6 +20,7 @@ class EmojiSelector extends StatefulWidget {
   final EdgeInsets padding;
   final bool withTitle;
   final Function(EmojiData) onSelected;
+  final TextStyle emojiTextStyle;
 
   const EmojiSelector({
     Key? key,
@@ -28,6 +29,10 @@ class EmojiSelector extends StatefulWidget {
     this.padding = EdgeInsets.zero,
     this.withTitle = true,
     required this.onSelected,
+    this.emojiTextStyle = const TextStyle(
+      fontSize: 24.0,
+      fontFamily: 'Apple Color Emoji',
+    ),
   }) : super(key: key);
 
   @override
@@ -112,6 +117,13 @@ class _EmojiSelectorState extends State<EmojiSelector> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+    _focusNode.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textSelectionData = Theme.of(context).textSelectionTheme;
 
@@ -188,6 +200,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
             columns: widget.columns,
             skin: _skin,
             emojis: e,
+            emojiTextStyle: widget.emojiTextStyle,
             onSelected: (internalData) {
               EmojiData emoji = EmojiData(
                 id: internalData.id,
@@ -251,9 +264,9 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                             $text.style.color(
                               ColorVariant.onSurface
                                   .resolve(context)
-                                  .withOpacity(
-                                    OpacityVariant.blend.resolve(context).value,
-                                  ),
+                                  .withOpacity(OpacityVariant.blend
+                                      .resolve(context)
+                                      .value),
                             ),
                           ),
                         ),
@@ -266,6 +279,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                     style: TextStyleVariant.h6.resolve(context).copyWith(
                         color: ColorVariant.onSurface.resolve(context)),
                     cursorColor: textSelectionData.cursorColor!,
+                    selectionColor: textSelectionData.selectionColor!,
                     backgroundCursorColor: textSelectionData.selectionColor!,
                     onChanged: searchEmoji,
                   ),
@@ -301,6 +315,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                         columns: widget.columns,
                         skin: _skin,
                         emojis: _emojiSearch,
+                        emojiTextStyle: widget.emojiTextStyle,
                         onSelected: (internalData) {
                           EmojiData emoji = EmojiData(
                             id: internalData.id,
