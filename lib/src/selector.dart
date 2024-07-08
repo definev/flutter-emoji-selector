@@ -240,6 +240,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
               width: 1,
             ),
           ),
+          position: DecorationPosition.foreground,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
