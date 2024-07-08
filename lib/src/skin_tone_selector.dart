@@ -74,8 +74,8 @@ class SkinDotButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Button(
       style: Style(
-        $box.height(42),
-        $box.width(42),
+        $box.height(32),
+        $box.width(32),
       ),
       onPressed: onPressed,
       child: SkinDot(skin: skin),

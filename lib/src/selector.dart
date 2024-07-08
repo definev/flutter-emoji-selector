@@ -10,6 +10,7 @@ import 'package:emoji_selector/src/emoji_internal_data.dart';
 import 'package:emoji_selector/src/emoji_page.dart';
 import 'package:emoji_selector/src/group.dart';
 import 'package:emoji_selector/src/skin_tone_selector.dart';
+import 'package:emoji_selector/src/skin_tones.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:mix/mix.dart';
@@ -397,6 +398,20 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                     ),
                   ),
                 ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: selectors,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (final (index, _) in SkinTones.tones.indexed)
+                    SkinDotButton(
+                      onPressed: () => setState(() => _skin = index),
+                      skin: index,
+                    ),
+                ],
+              ),
             ],
           ),
         );
