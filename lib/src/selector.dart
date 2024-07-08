@@ -226,15 +226,6 @@ class _EmojiSelectorState extends State<EmojiSelector> {
       );
       index += group.pages.length;
     }
-    selectors.add(
-      SkinToneSelector(
-        onSkinChanged: (skin) {
-          setState(() {
-            _skin = skin;
-          });
-        },
-      ),
-    );
 
     return LayoutBuilder(
       builder: (context, constraints) {
