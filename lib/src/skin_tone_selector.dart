@@ -33,6 +33,7 @@ class _SkinToneState extends State<SkinToneSelector> {
           target: Alignment.topRight,
         ),
         portalFollower: SizedBox(
+          height: size.height,
           width:
               size.height * SkinTones.tones.length + SkinTones.tones.length + 1,
           child: DSToolbar(
