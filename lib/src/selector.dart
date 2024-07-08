@@ -230,8 +230,16 @@ class _EmojiSelectorState extends State<EmojiSelector> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final size = constraints.biggest;
-        return ColoredBox(
-          color: ColorVariant.surface.resolve(context),
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            color: ColorVariant.surface.resolve(context),
+            border: Border.all(
+              color: ColorVariant.onSurface.resolve(context).withOpacity(
+                    OpacityVariant.hightlight.resolve(context).value,
+                  ),
+              width: 1,
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
