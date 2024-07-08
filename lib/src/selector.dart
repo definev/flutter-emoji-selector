@@ -259,7 +259,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                       EditableText(
                         controller: _controller,
                         focusNode: _focusNode,
-                        style: TextStyleVariant.h6.resolve(context).copyWith(
+                        style: TextStyleVariant.p.resolve(context).copyWith(
                             color: ColorVariant.onSurface.resolve(context)),
                         cursorColor: textSelectionData.cursorColor!,
                         selectionColor: textSelectionData.selectionColor!,
@@ -271,7 +271,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                         child: StyledText(
                           _controller.text.isEmpty ? 'Search emoji' : '',
                           style: Style(
-                            $text.style.ref(TextStyleVariant.h6),
+                            $text.style.ref(TextStyleVariant.p),
                             $text.style.color(
                               ColorVariant.onSurface
                                   .resolve(context)
