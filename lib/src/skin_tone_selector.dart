@@ -23,48 +23,44 @@ class _SkinToneState extends State<SkinToneSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final size = constraints.biggest;
-
-      return PortalTarget(
-        visible: _expanded,
-        anchor: Aligned(
-          follower: Alignment.bottomRight,
-          target: Alignment.topRight,
-        ),
-        portalFollower: SizedBox(
-          height: size.height,
-          width:
-              size.height * SkinTones.tones.length + SkinTones.tones.length + 1,
-          child: DSToolbar(
-            direction: Axis.horizontal,
-            children: [
-              for (var skin = 0; skin < SkinTones.tones.length; skin++)
-                DSToolbarItem(
-                  style: Style(
-                    $box.height(size.height),
-                    $box.width(size.height),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _skin = skin;
-                      widget.onSkinChanged(skin);
-                      _expanded = false;
-                    });
-                  },
-                  child: SkinDot(skin: skin),
+    return PortalTarget(
+      visible: _expanded,
+      anchor: Aligned(
+        follower: Alignment.bottomRight,
+        target: Alignment.topRight,
+      ),
+      portalFollower: SizedBox(
+        height: 32,
+        width:
+            32 * SkinTones.tones.length + SkinTones.tones.length + 1,
+        child: DSToolbar(
+          direction: Axis.horizontal,
+          children: [
+            for (var skin = 0; skin < SkinTones.tones.length; skin++)
+              DSToolbarItem(
+                style: Style(
+                  $box.height(32),
+                  $box.width(32),
                 ),
-            ],
-          ),
+                onPressed: () {
+                  setState(() {
+                    _skin = skin;
+                    widget.onSkinChanged(skin);
+                    _expanded = false;
+                  });
+                },
+                child: SkinDot(skin: skin),
+              ),
+          ],
         ),
-        child: SkinDotButton(
-          skin: _skin,
-          onPressed: () {
-            setState(() => _expanded = !_expanded);
-          },
-        ),
-      );
-    });
+      ),
+      child: SkinDotButton(
+        skin: _skin,
+        onPressed: () {
+          setState(() => _expanded = !_expanded);
+        },
+      ),
+    );
   }
 }
 
