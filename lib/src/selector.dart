@@ -115,6 +115,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
   void initState() {
     super.initState();
     loadEmoji(context);
+    _controller.addListener(() => setState(() {}));
   }
 
   @override
@@ -252,39 +253,36 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                     top: SpaceVariant.small.resolve(context),
                     bottom: SpaceVariant.gap.resolve(context),
                   ),
-                  child: ListenableBuilder(
-                    listenable: _controller,
-                    builder: (context, child) => Stack(
-                      fit: StackFit.loose,
-                      children: [
-                        child!,
-                        IgnorePointer(
-                          child: StyledText(
-                            _controller.text.isEmpty ? 'Search emoji' : '',
-                            style: Style(
-                              $text.style.ref(TextStyleVariant.h6),
-                              $text.style.color(
-                                ColorVariant.onSurface
-                                    .resolve(context)
-                                    .withOpacity(OpacityVariant.blend
-                                        .resolve(context)
-                                        .value),
-                              ),
+                  child: Stack(
+                    fit: StackFit.loose,
+                    children: [
+                      EditableText(
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        style: TextStyleVariant.h6.resolve(context).copyWith(
+                            color: ColorVariant.onSurface.resolve(context)),
+                        cursorColor: textSelectionData.cursorColor!,
+                        selectionColor: textSelectionData.selectionColor!,
+                        backgroundCursorColor:
+                            textSelectionData.selectionColor!,
+                        onChanged: searchEmoji,
+                      ),
+                      IgnorePointer(
+                        child: StyledText(
+                          _controller.text.isEmpty ? 'Search emoji' : '',
+                          style: Style(
+                            $text.style.ref(TextStyleVariant.h6),
+                            $text.style.color(
+                              ColorVariant.onSurface
+                                  .resolve(context)
+                                  .withOpacity(OpacityVariant.blend
+                                      .resolve(context)
+                                      .value),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    child: EditableText(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                      style: TextStyleVariant.h6.resolve(context).copyWith(
-                          color: ColorVariant.onSurface.resolve(context)),
-                      cursorColor: textSelectionData.cursorColor!,
-                      selectionColor: textSelectionData.selectionColor!,
-                      backgroundCursorColor: textSelectionData.selectionColor!,
-                      onChanged: searchEmoji,
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Divider(
