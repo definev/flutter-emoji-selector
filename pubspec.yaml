@@ -22,6 +22,7 @@ dependencies:
       ref: main
   
   mix: ^1.2.0
+  flutter_portal: ^1.1.4
 
 dev_dependencies:
   flutter_test:
