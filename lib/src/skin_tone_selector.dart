@@ -32,25 +32,29 @@ class _SkinToneState extends State<SkinToneSelector> {
           follower: Alignment.bottomRight,
           target: Alignment.topRight,
         ),
-        portalFollower: DSToolbar(
-          direction: Axis.horizontal,
-          children: [
-            for (var skin = 0; skin < SkinTones.tones.length; skin++)
-              DSToolbarItem(
-                style: Style(
-                  $box.height(size.height),
-                  $box.width(size.height),
+        portalFollower: SizedBox(
+          width:
+              size.height * SkinTones.tones.length + SkinTones.tones.length + 1,
+          child: DSToolbar(
+            direction: Axis.horizontal,
+            children: [
+              for (var skin = 0; skin < SkinTones.tones.length; skin++)
+                DSToolbarItem(
+                  style: Style(
+                    $box.height(size.height),
+                    $box.width(size.height),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _skin = skin;
+                      widget.onSkinChanged(skin);
+                      _expanded = false;
+                    });
+                  },
+                  child: SkinDot(skin: skin),
                 ),
-                onPressed: () {
-                  setState(() {
-                    _skin = skin;
-                    widget.onSkinChanged(skin);
-                    _expanded = false;
-                  });
-                },
-                child: SkinDot(skin: skin),
-              ),
-          ],
+            ],
+          ),
         ),
         child: SkinDotButton(
           skin: _skin,
