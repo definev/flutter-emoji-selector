@@ -385,6 +385,16 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                         children: pages,
                       ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (final (index, _) in SkinTones.tones.indexed)
+                    SkinDotButton(
+                      onPressed: () => setState(() => _skin = index),
+                      skin: index,
+                    ),
+                ],
+              ),
               if (_controller.text.isEmpty)
                 Center(
                   heightFactor: 1.0,
@@ -398,20 +408,6 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                     ),
                   ),
                 ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: selectors,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  for (final (index, _) in SkinTones.tones.indexed)
-                    SkinDotButton(
-                      onPressed: () => setState(() => _skin = index),
-                      skin: index,
-                    ),
-                ],
-              ),
             ],
           ),
         );
