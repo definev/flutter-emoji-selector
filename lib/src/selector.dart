@@ -295,7 +295,7 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                 if (widget.withTitle)
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: SpaceVariant.medium.resolve(context) + 2,
+                      horizontal: SpaceVariant.medium.resolve(context),
                       vertical: SpaceVariant.small.resolve(context),
                     ),
                     child: StyledText(
