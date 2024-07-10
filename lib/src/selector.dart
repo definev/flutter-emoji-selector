@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:design_system/design_system.dart';
 import 'package:emoji_selector/emoji_selector.dart';
@@ -266,6 +267,8 @@ class _EmojiSelectorState extends State<EmojiSelector> {
                         backgroundCursorColor:
                             textSelectionData.selectionColor!,
                         onChanged: searchEmoji,
+                        selectionHeightStyle: BoxHeightStyle.strut,
+                        selectionWidthStyle: BoxWidthStyle.max,
                       ),
                       IgnorePointer(
                         child: StyledText(
