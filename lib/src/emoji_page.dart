@@ -23,11 +23,12 @@ class EmojiPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GridView.count(
+        padding: EdgeInsets.zero,
         crossAxisCount: columns,
         children: List.generate(
           rows * columns,
           (index) {
-            if (index >= emojis.length) return Container();
+            if (index >= emojis.length) return SizedBox();
             var emoji = emojis[index];
             return Center(
               child: TextButton(
